@@ -24,4 +24,4 @@ jobs:
         poetry install
     - name: Analysing the code with pylint
       run: |
-        pylint mrs_api/
+        poetry run pylint mrs_api/
