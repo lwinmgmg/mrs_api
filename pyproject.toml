@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "mrs-api"
+version = "0.1.0"
+description = ""
+authors = ["Lwin Maung Maung <lwinmaungmaung.ytu@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["standard"], version = "^0.112.1"}
+sqlalchemy = "^2.0.32"
+asyncpg = "^0.29.0"
+pydantic-settings = "^2.4.0"
+coverage = "^7.6.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

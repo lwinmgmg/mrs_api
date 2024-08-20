@@ -1,0 +1,8 @@
+.vscode/
+**/*.pyc
+**/*__pycache__
+poetry.lock
+.venv
+.coverage
+.pytet_cache/
+.env
