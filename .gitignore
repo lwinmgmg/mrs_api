@@ -1,6 +1,7 @@
 .vscode/
 **/*.pyc
 **/*__pycache__
+poetry.lock
 .venv
 .coverage
 .pytest_cache/
