@@ -4,5 +4,7 @@
 poetry.lock
 .venv
 .coverage
-.pytet_cache/
+.pytest_cache/
 .env
+.python-version
+dist/
