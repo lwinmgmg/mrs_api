@@ -5,11 +5,16 @@ from mrs_api.env.settings import get_settings
 settings = get_settings()
 
 
-def get_postgres_uri(host: str, port: int, user: str, password: str, db: str) -> str:
+def get_postgres_uri(
+    host: str, port: int, user: str, password: str, db: str, statement_count: int = 1000
+) -> str:
     user = quote(user)
     password = quote(password)
     db = quote(db)
-    return f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
+    return (
+        f"postgresql+asyncpg://{user}:{password}@{host}"
+        f":{port}/{db}?prepared_statement_cache_size={statement_count}"
+    )
 
 
 engine = create_async_engine(
@@ -19,5 +24,6 @@ engine = create_async_engine(
         user=settings.postgres_user,
         password=settings.postgres_password,
         db=settings.postgres_db,
-    )
+    ),
+    echo=settings.debug,
 )
