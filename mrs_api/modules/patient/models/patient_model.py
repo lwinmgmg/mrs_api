@@ -1,3 +1,4 @@
+# pylint: disable=unsubscriptable-object
 from typing import Self
 from datetime import date
 from sqlalchemy import Column, String, Integer, ForeignKey, Date, select

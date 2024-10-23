@@ -1,3 +1,4 @@
+# pylint: disable=unsubscriptable-object
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import Mapped, relationship
 from mrs_api.services.base import Base, Model
