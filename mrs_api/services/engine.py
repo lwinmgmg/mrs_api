@@ -1,3 +1,4 @@
+# pylint: disable=too-many-arguments, too-many-positional-arguments
 from urllib.parse import quote
 from sqlalchemy.ext.asyncio import create_async_engine
 from mrs_api.env.settings import get_settings

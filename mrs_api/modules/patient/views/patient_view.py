@@ -27,3 +27,13 @@ class PatientView(
     PatientInfoView, PatientContactInfo, PatientPersonalInfo, AddressInfo
 ):
     pass
+
+
+class PatientCreateView(BaseModel):
+    name: str
+    is_patient: Optional[bool] = True
+    email: str
+    phone: Optional[str]
+    mobile: Optional[str]
+    date_of_birth: Optional[date]
+    gender: Optional[str]

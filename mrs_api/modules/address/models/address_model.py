@@ -1,3 +1,4 @@
+# pylint: disable=unsubscriptable-object
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy import Column, Integer, String, ForeignKey
