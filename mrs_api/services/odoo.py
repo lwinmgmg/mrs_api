@@ -1,5 +1,7 @@
 # pylint: disable=too-many-instance-attributes, too-many-arguments, too-many-positional-arguments
 from typing import AsyncGenerator
+import asyncio
+from functools import partial
 from logging import getLogger
 import xmlrpc.client
 from xmlrpc.client import ServerProxy
@@ -20,15 +22,27 @@ class Odoo:
         password: str,
         conn_count: int = 10,
     ):
-        self.uid = None
+        self._uid = None
         self.app = app
         self.key = key
         self.url = url
         self.db = db
-        self.username = username
-        self.password = password
+        self._username = username
+        self._password = password
         self.conn_count = conn_count
         self.queue = Queue(maxsize=conn_count)
+
+    @property
+    def username(self):
+        return self._username
+
+    @property
+    def password(self):
+        return self._password
+
+    @property
+    def uid(self):
+        return self._uid
 
     def initialize_conn(self) -> ServerProxy:
         return xmlrpc.client.ServerProxy(f"{self.url}/xmlrpc/2/object")
@@ -36,7 +50,7 @@ class Odoo:
     def on_startup(self):
         common = xmlrpc.client.ServerProxy(f"{self.url}/xmlrpc/2/common")
         common.version()
-        self.uid = common.authenticate(self.db, self.username, self.password, {})
+        self._uid = common.authenticate(self.db, self._username, self._password, {})
         for i in range(self.conn_count):
             self.queue.put(self.initialize_conn())
             print(f"Initialized odoo connection #{i + 1}")
@@ -57,6 +71,19 @@ class OdooConnection:
     def __init__(self, conn: ServerProxy, odoo: Odoo):
         self.conn = conn
         self.odoo = odoo
+
+    async def execute(self, model: str, method: str, *args, **kwargs):
+        func = partial(
+            self.conn.execute_kw,
+            self.odoo.db,
+            self.odoo.uid,
+            self.odoo.password,
+            model,
+            method,
+            args,
+            kwargs,
+        )
+        return await asyncio.get_event_loop().run_in_executor(None, func)
 
 
 def odoo_conn(key: str) -> AsyncGenerator[OdooConnection, None]:

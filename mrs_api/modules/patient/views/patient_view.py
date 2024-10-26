@@ -33,7 +33,29 @@ class PatientCreateView(BaseModel):
     name: str
     is_patient: Optional[bool] = True
     email: str
-    phone: Optional[str]
-    mobile: Optional[str]
-    date_of_birth: Optional[date]
-    gender: Optional[str]
+    phone: Optional[str] = None
+    mobile: Optional[str] = None
+    date_of_birth: Optional[date] = None
+    gender: Optional[str] = None
+    street: Optional[str] = None
+    street2: Optional[str] = None
+    zip: Optional[str] = None
+    city: Optional[str] = None
+    country_id: int
+    state_id: Optional[int] = None
+
+
+class PatientUpdateView(BaseModel):
+    name: Optional[str] = None
+    is_patient: Optional[bool] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    mobile: Optional[str] = None
+    date_of_birth: Optional[date] = None
+    gender: Optional[str] = None
+    street: Optional[str] = None
+    street2: Optional[str] = None
+    zip: Optional[str] = None
+    city: Optional[str] = None
+    country_id: Optional[int] = None
+    state_id: Optional[int] = None

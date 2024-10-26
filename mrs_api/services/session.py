@@ -8,7 +8,11 @@ async_session = async_sessionmaker(engine)
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, Any]:
     async with async_session() as session:
-        yield session
+        try:
+            yield session
+        except:
+            await session.rollback()
+            raise
 
 
 def db_session():
